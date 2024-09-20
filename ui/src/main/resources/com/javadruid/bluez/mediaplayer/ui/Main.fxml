@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="439.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javadruid.bluez.mediaplayer.ui.MainController">
+   <children>
+      <SplitPane dividerPositions="0.32441471571906355" layoutX="15.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="35.0">
+               <children>
+                  <ListView fx:id="players" layoutX="-5.0" layoutY="31.0" prefHeight="398.0" prefWidth="190.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <CheckBox fx:id="browsable" disable="true" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Browsable" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                  <Label layoutX="8.0" layoutY="36.0" text="Device:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="5.0" layoutY="69.0" text="Equalizer:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="14.0" layoutY="100.0" text="Name:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="13.0" layoutY="128.0" text="Playlist:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="14.0" layoutY="155.0" text="Position:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="16.0" layoutY="184.0" text="Repeat:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="16.0" layoutY="210.0" text="Scan:" AnchorPane.leftAnchor="14.0" />
+                  <CheckBox fx:id="searchable" disable="true" layoutX="112.0" layoutY="14.0" mnemonicParsing="false" text="Searchable" />
+                  <Label layoutX="14.0" layoutY="238.0" text="Shuffle:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="13.0" layoutY="265.0" text="Status:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="13.0" layoutY="293.0" text="Subtype:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="18.0" layoutY="322.0" text="Track:" AnchorPane.leftAnchor="14.0" />
+                  <Label layoutX="14.0" layoutY="347.0" text="Type:" AnchorPane.leftAnchor="14.0" />
+                  <TextField fx:id="device" editable="false" layoutX="66.0" layoutY="31.0" prefHeight="25.0" prefWidth="330.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="equaliser" layoutX="67.0" layoutY="64.0" prefHeight="25.0" prefWidth="311.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="name" editable="false" layoutX="61.0" layoutY="92.0" prefHeight="25.0" prefWidth="338.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="playlist" editable="false" layoutX="66.0" layoutY="123.0" prefHeight="25.0" prefWidth="330.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="position" editable="false" layoutX="74.0" layoutY="150.0" prefHeight="25.0" prefWidth="324.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="repeat" editable="false" layoutX="215.0" layoutY="179.0" prefHeight="25.0" prefWidth="330.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="scan" editable="false" layoutX="50.0" layoutY="205.0" prefHeight="25.0" prefWidth="345.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="shuffle" editable="false" layoutX="215.0" layoutY="231.0" prefHeight="25.0" prefWidth="330.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="status" editable="false" layoutX="215.0" layoutY="260.0" prefHeight="25.0" prefWidth="330.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="subtype" editable="false" layoutX="215.0" layoutY="288.0" prefHeight="25.0" prefWidth="324.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="track" editable="false" layoutX="215.0" layoutY="317.0" prefHeight="25.0" prefWidth="338.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <TextField fx:id="type" editable="false" layoutX="224.0" layoutY="345.0" prefHeight="25.0" prefWidth="338.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="4.0" />
+                  <Button layoutX="2.0" layoutY="370.0" mnemonicParsing="false" onAction="#onRefresh" text="Refresh" />
+                  <Button layoutY="395.0" mnemonicParsing="false" onAction="#onPrevious" text="Previous" />
+                  <Button layoutX="79.0" layoutY="395.0" mnemonicParsing="false" onAction="#onPlay" text="Play" />
+                  <Button layoutX="133.0" layoutY="395.0" mnemonicParsing="false" onAction="#onPause" text="Pause" />
+                  <Button layoutX="200.0" layoutY="395.0" mnemonicParsing="false" onAction="#onNext" text="Next" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
