@@ -12,7 +12,7 @@
     </properties>
     <modules>
         <module>ui</module>
-        <module>mediaplayer</module>
+        <module>lib</module>
     </modules>
     <build>
         <pluginManagement>
