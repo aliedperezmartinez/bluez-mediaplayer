@@ -178,9 +178,14 @@ public class MediaPlayer {
     }
 
     // Listeners
-    public void onPropertyChange(Consumer<Map.Entry<String, Object>> handler) throws DBusException {
+    public void onPropertyChange(Consumer<Map.Entry<String, Object>> handler) {
         if(signalhandler != null)
-            connection.removeSigHandler(PropertiesChanged.class, properties, signalhandler);
+            try {
+                connection.removeSigHandler(PropertiesChanged.class, properties, signalhandler);
+        } catch (DBusException ex) {
+            logger.error("Error removing existing listener", ex);
+            throw new RuntimeException(ex);
+        }
         signalhandler = s -> {
             s.getPropertiesChanged()
                 .entrySet().stream()
@@ -188,12 +193,22 @@ public class MediaPlayer {
                 .forEach(handler::accept);
             logger.info("signal received: {}", s);
         };
-        connection.addSigHandler(PropertiesChanged.class, properties, signalhandler);
+        try {
+            connection.addSigHandler(PropertiesChanged.class, properties, signalhandler);
+        } catch (DBusException ex) {
+            logger.error("Error adding new listener", ex);
+            throw new RuntimeException(ex);
+        }
     }
 
-    public void removePropertyChange() throws DBusException {
+    public void removePropertyChange() {
         if (signalhandler != null) {
-            connection.removeSigHandler(PropertiesChanged.class, properties, signalhandler);
+            try {
+                connection.removeSigHandler(PropertiesChanged.class, properties, signalhandler);
+            } catch (DBusException ex) {
+                logger.error("Error removing listener", ex);
+                throw new RuntimeException(ex);
+            }
         }
     }
 

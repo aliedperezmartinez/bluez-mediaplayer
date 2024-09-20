@@ -13,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import org.freedesktop.dbus.exceptions.DBusException;
 
 public class MainController implements Closeable {
 
@@ -109,23 +108,14 @@ public class MainController implements Closeable {
     private void changed(ObservableValue observable, Object oldValue, Object newValue) {
         final MediaPlayer player = (MediaPlayer) newValue;
         if (player != null) {
-            try {
-                player.onPropertyChange(e -> {
-                    System.out.println("Property changed: " + e.getKey() + " to: " + e.getValue());
-                    update(player);
-                });
-            } catch (DBusException ex) {
-                ex.printStackTrace();
-            }
+            player.onPropertyChange(e -> {
+                update(player);
+            });
             update(player);
         }
         final MediaPlayer oldPlayer = (MediaPlayer) oldValue;
-        if(oldPlayer != null) {
-            try {
-                oldPlayer.removePropertyChange();
-            } catch (DBusException ex) {
-                ex.printStackTrace();
-            }
+        if (oldPlayer != null) {
+            oldPlayer.removePropertyChange();
         }
     }
 
