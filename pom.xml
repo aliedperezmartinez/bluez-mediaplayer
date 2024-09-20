@@ -14,6 +14,10 @@
         <module>ui</module>
         <module>lib</module>
     </modules>
+    <scm>
+        <url>https://github.com/aliedperezmartinez/bluez-mediaplayer</url>
+        <connection>scm:git@github.com:aliedperezmartinez/bluez-mediaplayer.git</connection>
+    </scm>
     <build>
         <pluginManagement>
             <plugins>
@@ -93,4 +97,11 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/aliedperezmartinez/bluez-mediaplayer</url>
+        </repository>
+    </distributionManagement>
 </project>
