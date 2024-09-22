@@ -16,7 +16,9 @@
     </modules>
     <scm>
         <url>https://github.com/aliedperezmartinez/bluez-mediaplayer</url>
-        <connection>scm:git@github.com:aliedperezmartinez/bluez-mediaplayer.git</connection>
+        <connection>scm:git:${project.scm.url}</connection>
+        <developerConnection>${project.scm.connection}</developerConnection>
+        <tag>HEAD</tag>
     </scm>
     <build>
         <pluginManagement>
