@@ -30,3 +30,10 @@ jobs:
         working-directory: ui/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ui-zip
+          path: ui/target/mediaplayer-ui-bin.zip
+          if-no-files-found: error
+          compression-level: 0
+          overwrite: true
