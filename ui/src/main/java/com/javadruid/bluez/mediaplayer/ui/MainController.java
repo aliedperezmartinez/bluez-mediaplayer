@@ -18,36 +18,51 @@ public class MainController implements Closeable {
 
     private final MediaPlayerManager mediaPlayerManager = new MediaPlayerManager();
 
-    public ListView players;
-    public CheckBox browsable;
-    public CheckBox searchable;
-    public TextField device;
-    public TextField equaliser;
-    public TextField name;
-    public TextField playlist;
-    public TextField position;
-    public TextField repeat;
-    public TextField scan;
-    public TextField shuffle;
-    public TextField status;
-    public TextField subtype;
-    public TextField track;
-    public TextField type;
+    @FXML
+    ListView<MediaPlayer> players;
+    @FXML
+    CheckBox browsable;
+    @FXML
+    CheckBox searchable;
+    @FXML
+    TextField device;
+    @FXML
+    TextField equaliser;
+    @FXML
+    TextField name;
+    @FXML
+    TextField playlist;
+    @FXML
+    TextField position;
+    @FXML
+    TextField repeat;
+    @FXML
+    TextField scan;
+    @FXML
+    TextField shuffle;
+    @FXML
+    TextField status;
+    @FXML
+    TextField subtype;
+    @FXML
+    TextField track;
+    @FXML
+    TextField type;
 
     public void initialize() {
-        final MultipleSelectionModel selectionModel = players.getSelectionModel();
+        final MultipleSelectionModel<MediaPlayer> selectionModel = players.getSelectionModel();
         selectionModel.setSelectionMode(SelectionMode.MULTIPLE);
         selectionModel.selectedItemProperty().addListener(this::changed);
-        final ObservableList listItems = players.getItems();
+        final ObservableList<MediaPlayer> listItems = players.getItems();
         mediaPlayerManager.getMediaPlayers().forEach(listItems::add);
         if (!listItems.isEmpty()) {
             selectionModel.selectFirst();
-            update((MediaPlayer) selectionModel.getSelectedItem());
+            update(selectionModel.getSelectedItem());
         }
     }
 
     @FXML
-    public void onRefresh(ActionEvent event) {
+    void onRefresh(ActionEvent event) {
         players.getSelectionModel()
             .selectedItemProperty()
             .removeListener(this::changed);
@@ -56,25 +71,25 @@ public class MainController implements Closeable {
     }
 
     @FXML
-    public void onPrevious(ActionEvent event) {
+    void onPrevious(ActionEvent event) {
         final MediaPlayer currentPlayer = getCurrentPlayer();
         if(currentPlayer != null) currentPlayer.previous();
     }
 
     @FXML
-    public void onPlay(ActionEvent event) {
+    void onPlay(ActionEvent event) {
         MediaPlayer currentPlayer = getCurrentPlayer();
         if(currentPlayer != null) currentPlayer.play();
     }
 
     @FXML
-    public void onPause(ActionEvent event) {
+    void onPause(ActionEvent event) {
         MediaPlayer currentPlayer = getCurrentPlayer();
         if(currentPlayer != null) currentPlayer.pause();
     }
 
     @FXML
-    public void onNext(ActionEvent event) {
+    void onNext(ActionEvent event) {
         MediaPlayer currentPlayer = getCurrentPlayer();
         if(currentPlayer != null) currentPlayer.next();
     }
@@ -102,7 +117,7 @@ public class MainController implements Closeable {
     }
 
     private MediaPlayer getCurrentPlayer() {
-        return (MediaPlayer) players.getSelectionModel().getSelectedItem();
+        return players.getSelectionModel().getSelectedItem();
     }
 
     private void changed(ObservableValue observable, Object oldValue, Object newValue) {
