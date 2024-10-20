@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.freedesktop.dbus.DBusMap;
+import org.freedesktop.dbus.DBusPath;
 import org.freedesktop.dbus.ObjectPath;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.exceptions.DBusException;
@@ -40,13 +41,13 @@ public class MediaPlayerManager implements Closeable {
     public Stream<MediaPlayer> getMediaPlayers() {
         try {
             return getManagedObjects()
-                .map(DBusMap.class::cast)
+                .map(o -> (DBusMap<ObjectPath, DBusMap>)o)
                 .map(DBusMap::entrySet)
                 .flatMap(Set::stream)
-                .filter(o -> hasMediaPlayer((Map.Entry) o))
-                .map(o -> getEntryKey((Map.Entry) o))
-                .map(o -> ((ObjectPath) o).getPath())
-                .map(o -> mediaPlayer((String) o))
+                .filter(MediaPlayerManager::hasMediaPlayer)
+                .map(Map.Entry::getKey)
+                .map(DBusPath::getPath)
+                .map(this::mediaPlayer)
                 .filter(Objects::nonNull);
         } catch (DBusException ex) {
             logger.error("Error retrieving objects", ex);
@@ -68,20 +69,16 @@ public class MediaPlayerManager implements Closeable {
         }
     }
 
-    private static boolean hasMediaPlayer(Map.Entry<ObjectPath, DBusMap> e) {
-        return e.getValue().containsKey(MediaPlayer1.DBUS_INTERFACE_NAME);
-    }
-
-    private static ObjectPath getEntryKey(Map.Entry<ObjectPath, DBusMap> e) {
-        return e.getKey();
-    }
-
     private Stream<Object> getManagedObjects() throws DBusException {
     return Arrays.stream(
         conn.callMethodAsync(remoteObject, "GetManagedObjects")
             .getCall()
             .getReply()
             .getParameters());
+    }
+
+    private static boolean hasMediaPlayer(Map.Entry<ObjectPath, DBusMap> e) {
+        return e.getValue().containsKey(MediaPlayer1.DBUS_INTERFACE_NAME);
     }
 
     private MediaPlayer mediaPlayer(String path) {
