@@ -11,6 +11,7 @@ import org.freedesktop.dbus.errors.Error;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.DBusSigHandler;
 import org.freedesktop.dbus.interfaces.Properties;
+import org.freedesktop.dbus.interfaces.Properties.PropertiesChanged;
 import org.freedesktop.dbus.messages.Message;
 import org.freedesktop.dbus.messages.MethodCall;
 import org.freedesktop.dbus.types.DBusMapType;
@@ -316,19 +317,19 @@ public class MediaPlayerTest {
 
         final DBusMap<String, Variant<?>> track = new DBusMap<>(
             new Object[][]{
-                {"Artist", new Variant(artist)},
-                {"NumberOfTracks", new Variant(new UInt32(numberOfTracks))},
-                {"Title", new Variant(title)},
-                {"Album", new Variant(album)},
-                {"Duration", new Variant(new UInt32(duration.toMillis()))},
-                {"Genre", new Variant(genre)},
-                {"TrackNumber", new Variant(new UInt32(trackNumber))}
+                {"Artist", new Variant<>(artist)},
+                {"NumberOfTracks", new Variant<>(new UInt32(numberOfTracks))},
+                {"Title", new Variant<>(title)},
+                {"Album", new Variant<>(album)},
+                {"Duration", new Variant<>(new UInt32(duration.toMillis()))},
+                {"Genre", new Variant<>(genre)},
+                {"TrackNumber", new Variant<>(new UInt32(trackNumber))}
             });
         when(connection.callMethodAsync(properties, "Get", MediaPlayer1.DBUS_INTERFACE_NAME, MediaPlayer.TRACK))
             .thenReturn(reply);
         when(reply.getCall()).thenReturn(call);
         when(call.getReply()).thenReturn(message);
-        when(message.getParameters()).thenReturn(new Object[]{new Variant(track, new DBusMapType(String.class, Variant.class))});
+        when(message.getParameters()).thenReturn(new Object[]{new Variant<>(track, new DBusMapType(String.class, Variant.class))});
         final Track expectedResult = new Track(artist, numberOfTracks, title, album, duration, genre, trackNumber);
 
         final MediaPlayer instance = newTestInstance();
@@ -375,8 +376,8 @@ public class MediaPlayerTest {
         final MediaPlayer instance = newTestInstance();
         instance.onPropertyChange(System.out::println);
 
-        verify(connection).addSigHandler(same(Properties.PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
-        verify(connection, never()).removeSigHandler(same(Properties.PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
+        verify(connection).addSigHandler(same(PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
+        verify(connection, never()).removeSigHandler(same(PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
     }
 
     @Test
@@ -386,8 +387,8 @@ public class MediaPlayerTest {
         instance.onPropertyChange(System.out::println);
         instance.removePropertyChange();
 
-        inOrder.verify(connection).addSigHandler(same(Properties.PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
-        inOrder.verify(connection).removeSigHandler(same(Properties.PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
+        inOrder.verify(connection).addSigHandler(same(PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
+        inOrder.verify(connection).removeSigHandler(same(PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
     }
 
     @Test
@@ -397,8 +398,8 @@ public class MediaPlayerTest {
         instance.onPropertyChange(System.out::println);
         instance.onPropertyChange(System.out::println);
 
-        inOrder.verify(connection).removeSigHandler(same(Properties.PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
-        inOrder.verify(connection).addSigHandler(same(Properties.PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
+        inOrder.verify(connection).removeSigHandler(same(PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
+        inOrder.verify(connection).addSigHandler(same(PropertiesChanged.class), eq(properties), any(DBusSigHandler.class));
     }
 
     @Test
@@ -448,18 +449,18 @@ public class MediaPlayerTest {
         return new MediaPlayer(connection, path);
     }
 
-    void mockObjectCall(final String methodName) {
+    private void mockObjectCall(final String methodName) {
         when(connection.callMethodAsync(remoteObject, methodName))
             .thenReturn(reply);
         when(reply.getCall()).thenReturn(call);
     }
 
-    void mockProperty(final String propertyName, final Object result) throws IllegalArgumentException, DBusException {
+    private void mockProperty(final String propertyName, final Object result) throws IllegalArgumentException, DBusException {
         when(connection.callMethodAsync(properties, "Get", MediaPlayer1.DBUS_INTERFACE_NAME, propertyName))
             .thenReturn(reply);
         when(reply.getCall()).thenReturn(call);
         when(call.getReply()).thenReturn(message);
-        when(message.getParameters()).thenReturn(new Object[]{new Variant(result)});
+        when(message.getParameters()).thenReturn(new Object[]{new Variant<>(result)});
     }
 
 }
