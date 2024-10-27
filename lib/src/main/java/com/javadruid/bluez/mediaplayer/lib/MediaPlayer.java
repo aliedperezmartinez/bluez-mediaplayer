@@ -161,7 +161,7 @@ public class MediaPlayer {
     }
 
     public Optional<Track> getTrack() {
-        final DBusMap<String, Variant<?>> result = (DBusMap) getProperty(TRACK);
+        final DBusMap<String, Variant<?>> result = (DBusMap<String, Variant<?>>) getProperty(TRACK);
         return Optional.ofNullable(result)
             .map(r -> new Track(
                 (String) getValue(r.get("Artist")),
@@ -218,7 +218,7 @@ public class MediaPlayer {
     }
 
     private static Map.Entry<String, Object> toObjectEntry(Map.Entry<String, Variant<?>> e) {
-        return Map.entry(e.getKey(), e.getValue());
+        return Map.entry(e.getKey(), e.getValue().getValue());
     }
 
     private static int getInt(Variant<?> r) {
