@@ -7,8 +7,8 @@
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.11.0</junit.version>
-        <mockito.version>5.7.0</mockito.version>
+        <junit.version>5.11.2</junit.version>
+        <mockito.version>5.13.0</mockito.version>
     </properties>
     <modules>
         <module>ui</module>
@@ -33,8 +33,9 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.5.0</version>
+                    <version>3.5.1</version>
                     <configuration combine.self="append">
+                        <argLine>-XX:+EnableDynamicAgentLoading</argLine>
                     </configuration>
                 </plugin>
                 <plugin>
