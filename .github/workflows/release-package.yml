@@ -2,12 +2,12 @@ name: Publish package to GitHub Packages
 on:
   workflow_dispatch:
   release:
-    types: [created]
+    types: [published]
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     steps:
       - uses: actions/checkout@v4
