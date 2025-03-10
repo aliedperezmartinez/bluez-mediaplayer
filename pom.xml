@@ -8,7 +8,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.12.0</junit.version>
-        <mockito.version>5.15.2</mockito.version>
+        <mockito.version>5.16.0</mockito.version>
     </properties>
     <modules>
         <module>ui</module>
