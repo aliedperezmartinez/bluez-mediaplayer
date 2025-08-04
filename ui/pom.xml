@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <properties>
-        <javafx.version>22.0.2</javafx.version>
+        <javafx.version>26-ea+2</javafx.version>
     </properties>
     <dependencies>
         <dependency>
